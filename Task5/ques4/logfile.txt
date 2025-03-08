@@ -1,0 +1,4 @@
+[2024-02-13 10:15:30] INFO - Server started
+[2024-02-13 10:16:00] ERROR - Connection failed
+[2024-02-13 10:17:45] WARNING - High memory usage
+[2024-02-13 10:18:20] ERROR - Timeout occurred
