@@ -8,7 +8,7 @@ products = [
 for product in products:
     if product['Category'] == 'Electronics':
         product['Price'] *= 1.10
-print("Increased price:",products)
+print("1.Increased price:",products)
 count={}
 for product in products:
     category=product['Category']
@@ -16,9 +16,17 @@ for product in products:
         count[category]+=1
     else:
         count[category]=1
-print("product count :",count)
+print("2.product count :",count)
 total_stock=0
 for product in products:
     if product["Stock"] is not None:
         total_stock+=product["Stock"]
-print("Total stock:",total_stock)
+print("3.Total stock:",total_stock)
+most_expensive = products[0]
+cheapest = products[0]
+for product in products:
+    if product['Price'] > most_expensive['Price']:
+        most_expensive = product
+    if product['Price'] < cheapest['Price']:
+        cheapest = product
+print("4.Most Expensive Product:", most_expensive,"Cheapest Product:", cheapest)
