@@ -34,8 +34,7 @@ def verify_token(token: str):
     except JWTError:
         return None
 @app.post("/signup")
-def signup(form_data: OAuth2PasswordRequestForm = Depends(),
-           session: Session = Depends(get_session)):
+def signup(form_data: OAuth2PasswordRequestForm = Depends(),session: Session = Depends(get_session)):
     user_exists = session.exec(
         select(User).where(User.username == form_data.username)
     ).first()
