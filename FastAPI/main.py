@@ -1,14 +1,16 @@
 from fastapi import FastAPI
 from crud import crud_router
-from Internship.FastAPI.auth import auth_router
-from Internship.FastAPI.logsign import user_router
+from auth import auth_router
+from user import user_router
+from sqlmodel import SQLModel
+from crud import engine  # Import engine to create tables
 
 app = FastAPI()
 
-@app.get("/")
-def index():
-    return {"message": "Welcome to FastAPI Project"}
+@app.on_event("startup")
+def on_startup():
+    SQLModel.metadata.create_all(engine)
 
-app.include_router(crud_router, prefix="/crud", tags=["CRUD Operations"])
-app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
-app.include_router(user_router, prefix="/user", tags=["User Login/Signup"])
+app.include_router(crud_router,prefix="/crud")
+app.include_router(auth_router,prefix="/auth")
+app.include_router(user_router,prefix="/user")

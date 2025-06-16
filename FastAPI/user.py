@@ -3,7 +3,8 @@ from sqlmodel import SQLModel, Field, Session, create_engine, select
 from pydantic import BaseModel
 from passlib.hash import bcrypt
 from jose import jwt
-app = FastAPI()
+from fastapi import APIRouter
+user_router=APIRouter()
 DATABASE_URL = "postgresql://gokila:goki@localhost:5432/fastapi_db"
 engine = create_engine(DATABASE_URL, echo=True)
 SECRET_KEY = "secret"
@@ -15,10 +16,7 @@ class User(SQLModel, table=True):
 class UserInput(BaseModel):
     username: str
     password: str
-@app.on_event("startup")
-def create_db():
-    SQLModel.metadata.create_all(engine)
-@app.post("/signup")
+@user_router.post("/signup")
 def signup(user: UserInput):
     with Session(engine) as session:
         existing = session.exec(select(User).where(User.username == user.username)).first()
@@ -29,7 +27,7 @@ def signup(user: UserInput):
         session.add(new_user)
         session.commit()
         return {"msg": "Signup success"}
-@app.post("/login")
+@user_router.post("/login")
 def login(user: UserInput):
     with Session(engine) as session:
         db_user = session.exec(select(User).where(User.username == user.username)).first()
