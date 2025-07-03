@@ -1,12 +1,10 @@
 from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlmodel import SQLModel, Field, create_engine, Session, select
 from typing import Annotated, Optional
- 
+from database import engine
+
 crud_router = APIRouter()    # Create an API router
 
-postgres_url = "postgresql://gokila:goki@localhost:5432/fastapi_db"    # PostgreSQL database connection string
-
-engine = create_engine(postgres_url, echo=True)    # Create a SQLModel engine to connect to the DB
 
 # Define Hero table model
 class Hero(SQLModel, table=True):
@@ -41,7 +39,7 @@ def create_hero(hero: Hero, session: Session = Depends(get_session)):
 @crud_router.get("/get_method/")    # Get list of heroes with optional offset and limit
 def read_heroes(
     session: SessionDep,
-    offset: int = 0,  # Starting point for results
+    offset: int = 0,   # Starting point for results
     limit: Annotated[int, Query(le=100)] = 100,  # Max 100 records
 ) -> list[Hero]:
     # Execute SELECT query with offset and limit

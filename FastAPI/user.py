@@ -3,12 +3,9 @@ from sqlmodel import SQLModel, Field, Session, create_engine, select
 from pydantic import BaseModel
 from passlib.hash import bcrypt
 from jose import jwt
+from database import engine
 
 user_router = APIRouter()    # Create API router
-
-DATABASE_URL = "postgresql://gokila:goki@localhost:5432/fastapi_db"
-
-engine = create_engine(DATABASE_URL, echo=True)   # Create the SQLModel database engine
 
 # JWT configuration values
 SECRET_KEY = "secret"

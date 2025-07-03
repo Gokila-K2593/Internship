@@ -6,15 +6,15 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
+from database import engine
+
 
 rbac_router = APIRouter()          # Create an API router for RBAC related route
 
-DATABASE_URL = "postgresql://gokila:goki@localhost:5432/fastapi_db"# PostgreSQL DB connection URL
 SECRET_KEY = "your_secret_key"     # Secret key for JWT token 
 ALGORITHM = "HS256"                # JWT encryption algorithm
 ACCESS_TOKEN_EXPIRE_MINUTES = 30   # Token expiry time in minutes
 
-engine = create_engine(DATABASE_URL, echo=True)   # Create DB engine
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")    # Password hashing context using bcrypt
 

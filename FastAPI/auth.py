@@ -1,17 +1,14 @@
-from fastapi import Depends, HTTPException, Security
+from fastapi import Depends, HTTPException, Security,APIRouter
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm, APIKeyHeader
 from jose import jwt, JWTError
 from datetime import datetime, timedelta
 from sqlmodel import SQLModel, Field, Session, create_engine, select
 from typing import Optional
-from fastapi import APIRouter
+from database import engine
 
 # Create FastAPI router instance for auth module
 auth_router = APIRouter()
 
-# Database connection string
-DATABASE_URL = "postgresql://gokila:goki@localhost/fastapi_db"
-engine = create_engine(DATABASE_URL, echo=True)
 
 class Auth(SQLModel, table=True):     # Table to store user credentials
     id: Optional[int] = Field(default=None, primary_key=True)

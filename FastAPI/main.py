@@ -6,11 +6,12 @@ from crud import crud_router
 from auth import auth_router
 from user import user_router
 from rbac import rbac_router
+from booking import booking_router
 
 
 from sqlmodel import SQLModel
+from database import engine
 
-from crud import engine  # engine is needed to create DB tables
 
 # Create FastAPI app instance
 app = FastAPI()
@@ -26,5 +27,6 @@ app.include_router(crud_router, prefix="/crud")
 app.include_router(auth_router, prefix="/auth")
 app.include_router(user_router, prefix="/user")
 app.include_router(rbac_router, prefix="/rbac")
+app.include_router(booking_router,prefix="/booking")
 
 
